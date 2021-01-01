@@ -1,4 +1,8 @@
-(ql:quickload "str")
+(defpackage skattelisten-csv-parser
+  (:use :cl)
+  (:export
+   :main))
+(in-package :skattelisten-csv-parser)
 
 (defstruct company
   cvr-num
@@ -35,6 +39,6 @@
                    :corporate-tax (nth 10 attr-list)))
     company))
 
-(defun main (fname)
-  (read-csv-file fname #'create-company)
+(defun main ()
+  (read-csv-file "~/skatteliste-2018.csv" #'create-company)
   (print "Finished import"))
