@@ -8,5 +8,5 @@
                 ((:file "main"))))
   :description "CSV parser for the danish company tax list."
   :build-operation "program-op"
-  :build-pathname "skattelisten-csvp"
+  :build-pathname "dist/skattelisten-csv-parser"
   :entry-point "skattelisten-csv-parser:main")
