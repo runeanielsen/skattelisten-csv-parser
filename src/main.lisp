@@ -1,5 +1,8 @@
 (defpackage skattelisten-csv-parser
-  (:use :cl)
+  (:use
+   :cl
+   :str
+   :unix-options)
   (:export
    :main))
 (in-package :skattelisten-csv-parser)
@@ -24,9 +27,8 @@
       (funcall thunk line))))
 
 (defun create-company (line)
-  (let ((attr-list nil)
-        (company nil))
-    (setf attr-list (str:split "," line))
+  (let ((attr-list nil) (company nil))
+    (setf attr-list (split "," line))
     (setq company (make-company
                    :cvr-num (nth 0 attr-list)
                    :name (nth 1 attr-list)
@@ -39,6 +41,12 @@
                    :corporate-tax (nth 10 attr-list)))
     company))
 
+(defun run (fname)
+  (read-csv-file fname #'create-company))
+
 (defun main ()
-  (read-csv-file "~/skatteliste-2018.csv" #'create-company)
-  (print "Finished import"))
+  (with-cli-options (uiop:*command-line-arguments*)
+                    (&parameters f)
+    (format t "Starting import of ~S.~%" f)
+    (run f)
+    (format t "Finished import.~%")))

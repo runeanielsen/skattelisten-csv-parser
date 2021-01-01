@@ -2,7 +2,8 @@
   :version "0.1.0"
   :author "Rune Andreas Nielsen"
   :license ""
-  :depends-on ("str")
+  :depends-on ("str"
+               "unix-options")
   :components ((:module "src"
                 :components
                 ((:file "main"))))
