@@ -39,16 +39,15 @@
         (push (funcall thunk (split "," line)) collection)))
     collection))
 
-(defun write-json-to-file (fname data)
+(defun write-json-to-file (fname objects)
   (with-open-file (stream fname
                           :direction :output
                           :if-exists :supersede
                           :if-does-not-exist :create)
-
     (format stream "[")
-    (dolist (company (without-last data))
-      (format stream "~A\," (to-json company)))
-    (format stream "~A]" (to-json (first (last data))))
+    (dolist (object (without-last objects))
+      (format stream "~A\," (to-json object)))
+    (format stream "~A]" (to-json (first (last objects))))
     (terpri stream)))
 
 (defun create-company (attributes)
@@ -64,7 +63,8 @@
 
 (defun run (input-file output-file)
   ; Taking the rest of the list because of first column being invalid.
-  (write-json-to-file output-file (rest (parse-file input-file #'create-company))))
+  (write-json-to-file output-file
+                      (rest (parse-file input-file #'create-company))))
 
 (defun without-last (l)
   (reverse (cdr (reverse l))))
@@ -75,3 +75,4 @@
     (format t "Starting import of ~S.~%" i)
     (run i o)
     (format t "Finished import. Wrote to file ~S ~%" o)))
+
