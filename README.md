@@ -2,6 +2,10 @@
 
 Parses the CSV files from [here](https://www.sktst.dk/aktuelt/skatteoplysninger-for-selskaber/).
 
+## NOTE
+
+This was made to play with common lisp if you want a much faster solution use [this](https://github.com/strnx/skattelisten-import).
+
 ## Use
 
 ```sh
