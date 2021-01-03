@@ -36,7 +36,7 @@
       (do ((line (read-line stream nil)
                  (read-line stream nil)))
           ((null line))
-        (push (funcall thunk (split "," line)) collection)))
+        (push (funcall thunk (coerce (split "," line) 'vector)) collection)))
     collection))
 
 (defun write-json-to-file (fname objects)
@@ -52,19 +52,19 @@
 
 (defun create-company (attributes)
   (make-instance 'company
-                 :cvr (nth 0 attributes)
-                 :name (nth 1 attributes)
-                 :se (nth 2 attributes)
-                 :income-year (nth 3 attributes)
-                 :company-type (nth 5 attributes)
-                 :taxable-income (nth 8 attributes)
-                 :deficit (nth 9 attributes)
-                 :corporate-tax (nth 10 attributes)))
+                 :cvr (aref attributes 0)
+                 :name (aref attributes 1)
+                 :se (aref attributes 2)
+                 :income-year (aref attributes 3)
+                 :company-type (aref attributes 5)
+                 :taxable-income (aref attributes 8)
+                 :deficit (aref attributes 9)
+                 :corporate-tax (aref attributes 10)))
 
 (defun run (input-file output-file)
   ; Taking the rest of the list because of first column being invalid.
-  (write-json-to-file output-file
-                      (rest (parse-file input-file #'create-company))))
+  (time (write-json-to-file output-file
+                      (rest (parse-file input-file #'create-company)))))
 
 (defun without-last (l)
   (reverse (cdr (reverse l))))
