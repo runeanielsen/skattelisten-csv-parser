@@ -3,7 +3,8 @@
   :author "Rune Andreas Nielsen"
   :license ""
   :depends-on ("str"
-               "unix-options")
+               "unix-options"
+               "jonathan")
   :components ((:module "src"
                 :components
                 ((:file "main"))))
